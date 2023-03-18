@@ -21,8 +21,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee getEmployee(Long employeeId) {
-        employeeRepository.findById(employeeId).orElseThrow(() -> new EmployeeNotFoundException("id is not found on server" + employeeId))
-        return null;
+        return employeeRepository.findById(employeeId).orElseThrow(() -> new EmployeeNotFoundException("id is not found on server" + employeeId));
     }
 
     @Override
