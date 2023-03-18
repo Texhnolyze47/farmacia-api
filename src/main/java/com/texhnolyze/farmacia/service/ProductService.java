@@ -10,6 +10,5 @@ public interface ProductService {
 
     Product saveProduct(Product product);
 
-
-
+    Product getProduct(String productId);
 }
