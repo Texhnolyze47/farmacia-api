@@ -2,7 +2,6 @@ package com.texhnolyze.farmacia.controllers;
 
 import com.texhnolyze.farmacia.entities.Product;
 import com.texhnolyze.farmacia.service.ProductService;
-import com.texhnolyze.farmacia.service.ProductServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +33,7 @@ public class ControllerProduct {
 
     @GetMapping("/{productId}")
     public ResponseEntity<Product> getProduct(@PathVariable String productId){
-        return null;
+        Product idProduct = productService.getProduct(productId);
+        return ResponseEntity.ok(idProduct);
     }
 }
