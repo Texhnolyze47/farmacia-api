@@ -16,12 +16,10 @@ import java.math.BigDecimal;
 @Setter
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String nombre;
+    private String id;
+    private String name;
     private String description;
-    private BigDecimal precio;
-    private Integer cantidad;
-
+    private BigDecimal price;
+    private Integer quantity;
 
 }
