@@ -20,15 +20,22 @@ public class Sale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "date")
     private LocalDateTime date;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private Client client;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")
     private Employee employee;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "sales_product",
+            joinColumns = @JoinColumn(name = "sale_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
     private List<Product> products;
+    @Column(name = "total")
     private BigDecimal total;
 
 }
