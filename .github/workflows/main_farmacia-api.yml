@@ -10,9 +10,9 @@ on:
   workflow_dispatch:
   
 env:
-  url: ${{secrets.SECRET_URL}}
-  user: ${{secrets.SECRET_USER}}
-  password: ${{secrets.SECRET_PASSWORD}}
+  url: ${{env.SECRET_URL}}
+  user: ${{env.SECRET_USER}}
+  password: ${{env.SECRET_PASSWORD}}
 
 jobs:
   build:
