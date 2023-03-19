@@ -8,6 +8,11 @@ on:
     branches:
       - main
   workflow_dispatch:
+  
+env:
+  url: ${{secrets.SECRET_URL}}
+  user: ${{secrets.SECRET_USER}}
+  password: ${{secrets.SECRET_PASSWORD}}
 
 jobs:
   build:
