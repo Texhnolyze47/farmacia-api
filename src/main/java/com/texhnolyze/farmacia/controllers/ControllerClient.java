@@ -33,6 +33,7 @@ public class ControllerClient {
 
     @GetMapping("/{clientId}")
     public ResponseEntity<Client> getClient(@PathVariable Long clientId){
-        return null;
+        Client idClient = clientService.getClient(clientId);
+        return ResponseEntity.ok(idClient);
     }
 }
