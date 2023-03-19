@@ -11,4 +11,6 @@ public interface ProductService {
     Product saveProduct(Product product);
 
     Product getProduct(String productId);
+
+    Product updateProduct(String productId, Product product);
 }

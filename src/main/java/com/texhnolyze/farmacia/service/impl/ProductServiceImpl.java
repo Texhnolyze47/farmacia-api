@@ -7,6 +7,7 @@ import com.texhnolyze.farmacia.service.ProductService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -34,6 +35,22 @@ public class ProductServiceImpl implements ProductService {
     public Product getProduct(String productId) {
         return productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException(
                 "id is not found on server" + productId));
+    }
+
+    @Override
+    public Product updateProduct(String productId,Product product) {
+        Optional<Product> notFoundProduct = productRepository.findById(productId);
+
+        if (notFoundProduct.isEmpty()){
+            return null;
+        }
+        Product existProduct = notFoundProduct.get();
+        existProduct.setName(product.getName());
+        existProduct.setDescription(product.getDescription());
+        existProduct.setPrice(product.getPrice());
+        existProduct.setQuantity(product.getQuantity());
+
+        return productRepository.save(existProduct);
     }
 
 
