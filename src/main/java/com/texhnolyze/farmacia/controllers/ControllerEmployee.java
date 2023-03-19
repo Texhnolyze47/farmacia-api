@@ -24,12 +24,13 @@ public class ControllerEmployee {
         Employee newEmployee = employeeService.saveEmployee(employee);
         return ResponseEntity.status(HttpStatus.CREATED).body(newEmployee);
     }
-
+    @GetMapping
     public ResponseEntity<List<Employee>> getAllEmployees(){
         List<Employee> allEmployees = employeeService.getAllEmployee();
         return ResponseEntity.ok(allEmployees);
     }
 
+    @GetMapping("/{EmployeeId}")
     public ResponseEntity<Employee> getEmployee(@PathVariable Long EmployeeId){
         Employee idEmployee = employeeService.getEmployee(EmployeeId);
         return ResponseEntity.ok(idEmployee);
