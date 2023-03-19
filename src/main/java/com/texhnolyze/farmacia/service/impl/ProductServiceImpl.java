@@ -1,8 +1,9 @@
-package com.texhnolyze.farmacia.service;
+package com.texhnolyze.farmacia.service.impl;
 
 import com.texhnolyze.farmacia.entities.Product;
 import com.texhnolyze.farmacia.exception.ProductNotFoundException;
 import com.texhnolyze.farmacia.repositories.ProductRepository;
+import com.texhnolyze.farmacia.service.ProductService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

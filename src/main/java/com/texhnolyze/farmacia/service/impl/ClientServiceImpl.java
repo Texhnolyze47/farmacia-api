@@ -1,13 +1,14 @@
-package com.texhnolyze.farmacia.service;
+package com.texhnolyze.farmacia.service.impl;
 
 import com.texhnolyze.farmacia.entities.Client;
 import com.texhnolyze.farmacia.exception.ClientNotFoundException;
 import com.texhnolyze.farmacia.repositories.ClientRepository;
+import com.texhnolyze.farmacia.service.ClientService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class ClientServiceImpl implements  ClientService{
+public class ClientServiceImpl implements ClientService {
 
     private ClientRepository clientRepository;
 

@@ -1,11 +1,13 @@
-package com.texhnolyze.farmacia.service;
+package com.texhnolyze.farmacia.service.impl;
 
 import com.texhnolyze.farmacia.entities.Employee;
 import com.texhnolyze.farmacia.exception.EmployeeNotFoundException;
 import com.texhnolyze.farmacia.repositories.EmployeeRepository;
+import com.texhnolyze.farmacia.service.EmployeeService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
