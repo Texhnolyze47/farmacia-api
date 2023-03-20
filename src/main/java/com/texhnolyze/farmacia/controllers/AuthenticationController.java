@@ -1,13 +1,13 @@
 package com.texhnolyze.farmacia.controllers;
 
 import com.texhnolyze.farmacia.config.JwtUtils;
+import com.texhnolyze.farmacia.dao.UserDao;
 import com.texhnolyze.farmacia.dto.AuthenticationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthenticationController {
     private  final AuthenticationManager authenticationManager;
-    private final UserDetailsService userDetailsService;
-    private JwtUtils jwtUtils;
+    private final UserDao userDao;
+    private final JwtUtils jwtUtils;
     @PostMapping("/authenticate")
     public ResponseEntity<String> authenticate(
             @RequestBody AuthenticationRequest authenticationRequest){
@@ -27,7 +27,7 @@ public class AuthenticationController {
                 authenticationRequest.getEmail(),
                 authenticationRequest.getPassword())
         );
-        final UserDetails user = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
+        final UserDetails user = userDao.findUserByEmail(authenticationRequest.getEmail());
         if (user != null){
             return ResponseEntity.ok(jwtUtils.generateToken(user));
         }

@@ -1,15 +1,10 @@
 package com.texhnolyze.farmacia.config;
 
+import com.texhnolyze.farmacia.dao.UserDao;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.http.parser.Authorization;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -19,9 +14,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
@@ -29,7 +21,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
-    private final UserDetailsService userDetailsService;
+    private final UserDao userDao;
     private final JwtUtils jwtUtils;
 
     @Override
@@ -41,14 +33,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
      final String jwtToken;
      if (authHeader == null || !authHeader.startsWith("Bearer")){
          filterChain.doFilter(request,response);
+         return;
      }
      jwtToken = authHeader.substring(7);
      userEmail = jwtUtils.extractUsername(jwtToken);
      if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null){
-         UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
-         final  boolean isTokenValid;
+         UserDetails userDetails = userDao.findUserByEmail(userEmail);
          if (jwtUtils.isTokenValid(jwtToken, userDetails)){
-             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+             UsernamePasswordAuthenticationToken authToken =
+                     new UsernamePasswordAuthenticationToken(
                              userDetails,
                              null,
                              userDetails.getAuthorities());
