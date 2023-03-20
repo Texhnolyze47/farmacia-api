@@ -2,10 +2,14 @@ package com.texhnolyze.farmacia.config;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.parser.Authorization;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -15,6 +19,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
@@ -24,6 +31,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
     private final JwtUtils jwtUtils;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -50,4 +58,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
      }
      filterChain.doFilter(request,response);
     }
+
+
 }
