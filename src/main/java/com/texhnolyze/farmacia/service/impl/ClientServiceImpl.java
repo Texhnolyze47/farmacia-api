@@ -7,10 +7,12 @@ import com.texhnolyze.farmacia.service.ClientService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class ClientServiceImpl implements ClientService {
 
-    private ClientRepository clientRepository;
+    private final ClientRepository clientRepository;
 
     public ClientServiceImpl(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
@@ -30,5 +32,25 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public List<Client> getAllClients() {
         return clientRepository.findAll();
+    }
+
+    @Override
+    public Client updateClient(Long clientId, Client client) {
+        Optional<Client> notFoundClient = clientRepository.findById(clientId);
+
+        if (notFoundClient.isEmpty()){
+            return null;
+        }
+        Client existClient = notFoundClient.get();
+        existClient.setName(client.getName());
+        existClient.setEmail(client.getEmail());
+        existClient.setNumber(client.getNumber());
+
+        return clientRepository.save(existClient);
+    }
+
+    @Override
+    public void deleteClient(Long clientId) {
+        clientRepository.deleteById(clientId);
     }
 }

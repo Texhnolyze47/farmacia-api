@@ -8,12 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/employees")
 public class ControllerEmployee {
 
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
     public ControllerEmployee(EmployeeService employeeService) {
         this.employeeService = employeeService;
@@ -30,9 +31,26 @@ public class ControllerEmployee {
         return ResponseEntity.ok(allEmployees);
     }
 
-    @GetMapping("/{EmployeeId}")
-    public ResponseEntity<Employee> getEmployee(@PathVariable Long EmployeeId){
-        Employee idEmployee = employeeService.getEmployee(EmployeeId);
+    @GetMapping("/{employeeId}")
+    public ResponseEntity<Employee> getEmployee(@PathVariable Long employeeId){
+        Employee idEmployee = employeeService.getEmployee(employeeId);
         return ResponseEntity.ok(idEmployee);
+    }
+
+    @PutMapping("/{employeeId}")
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Long employeeId, Employee employee){
+        Employee updateEmployee = employeeService.updateEmployee(employeeId,employee);
+
+        if (updateEmployee == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updateEmployee);
+
+    }
+
+    @DeleteMapping("/{employeeId}")
+    public ResponseEntity<String> deleteEmployee(@PathVariable Long employeeId){
+        employeeService.deleteEmployee(employeeId);
+        return ResponseEntity.ok("Se borro el product con el id " + employeeId);
     }
 }

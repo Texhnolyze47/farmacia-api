@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/products")
 public class ControllerProduct {
 
-    private ProductService productService;
+    private final ProductService productService;
 
     public ControllerProduct(ProductService productService) {
         this.productService = productService;
@@ -44,5 +44,11 @@ public class ControllerProduct {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(updateProduct);
+    }
+
+    @DeleteMapping("/{productId}")
+    public  ResponseEntity<String> deleteProduct(@PathVariable String productId ){
+        productService.deleteProduct(productId);
+        return ResponseEntity.ok("Se borro el product con el id " + productId);
     }
 }

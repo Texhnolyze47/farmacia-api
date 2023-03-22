@@ -36,4 +36,19 @@ public class ControllerClient {
         Client idClient = clientService.getClient(clientId);
         return ResponseEntity.ok(idClient);
     }
+
+    @PutMapping("/{clientId}")
+    public ResponseEntity<Client> updateClient(@PathVariable Long clientId, Client client){
+        Client updateCliente = clientService.updateClient(clientId,client);
+        if (updateCliente == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updateCliente);
+    }
+
+    @DeleteMapping("/{clientId}")
+    public ResponseEntity<String> deleteClient(@PathVariable Long clientId){
+        clientService.deleteClient(clientId);
+        return ResponseEntity.ok("Se borro el product con el id " + clientId);
+    }
 }

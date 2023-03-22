@@ -11,4 +11,5 @@ public interface SaleService {
     List<Sale> getAllSales();
 
     Sale getSale(Long saleId);
+
 }

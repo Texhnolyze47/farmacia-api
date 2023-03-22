@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/sales")
 public class ControllerSale {
-    private SaleService saleService;
+    private final SaleService saleService;
 
 
     public ControllerSale(SaleService saleService) {
