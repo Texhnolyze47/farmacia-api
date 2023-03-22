@@ -1,37 +1,30 @@
 package com.texhnolyze.farmacia.dao;
 
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+import com.texhnolyze.farmacia.repositories.UserRepository;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 @Repository
 public class UserDao {
 
-    private final static List<UserDetails>  USER = Arrays.asList(
-            new User(
-                    "ivan@mail.com",
-                    "password",
-                    Collections.singleton(new SimpleGrantedAuthority("ROLE_ADMIN"))
-            ),
-            new User(
-                    "josa@mail.com",
-                    "password",
-                    Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"))
 
-            )
-    );
+    private final UserRepository userRepository;
+
+    public UserDao(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public UserDetails findUserByEmail(String email){
-        return USER
-                .stream()
-                .filter(u -> u.getUsername().equals(email))
-                .findFirst()
-                .orElseThrow(() -> new UsernameNotFoundException("No user found"));
+        com.texhnolyze.farmacia.entities.User user = userRepository.findByEmail(email);
+        if (user == null){
+            throw  new UsernameNotFoundException("No user found");
+        }
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(),
+                user.getPassword(),
+                AuthorityUtils.createAuthorityList(user.getRoles().toArray(new String[0])));
     }
 }
 
