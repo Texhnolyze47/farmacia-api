@@ -38,7 +38,7 @@ public class ControllerClient {
     }
 
     @PutMapping("/{clientId}")
-    public ResponseEntity<Client> updateClient(@PathVariable Long clientId, Client client){
+    public ResponseEntity<Client> updateClient(@PathVariable Long clientId, @RequestBody Client client){
         Client updateCliente = clientService.updateClient(clientId,client);
         if (updateCliente == null){
             return ResponseEntity.notFound().build();
