@@ -1,7 +1,6 @@
 package com.texhnolyze.farmacia.controllers;
 
 import com.texhnolyze.farmacia.entities.Product;
-import com.texhnolyze.farmacia.exception.RequestException;
 import com.texhnolyze.farmacia.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
