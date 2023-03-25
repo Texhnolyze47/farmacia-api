@@ -30,7 +30,7 @@ public class Product {
     @Positive(message = "El precio debe ser mayor que cero")
 
     @Column(name = "price")
-    private BigDecimal price;
+    private Double price;
     @NotNull(message = "La cantidad del producto es necesario")
     @Positive(message = "La cantidad debe ser mayor que cero")
     @Column(name = "quantity")
