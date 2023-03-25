@@ -50,6 +50,6 @@ public class ControllerProduct {
     @DeleteMapping("/{productId}")
     public  ResponseEntity<String> deleteProduct(@PathVariable String productId ){
         productService.deleteProduct(productId);
-        return ResponseEntity.ok("Se borro el product con el id " + productId);
+        return ResponseEntity.noContent().build();
     }
 }
