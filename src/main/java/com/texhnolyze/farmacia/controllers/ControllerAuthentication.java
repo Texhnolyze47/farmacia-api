@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-public class AuthenticationController {
+public class ControllerAuthentication {
     private final AuthenticationManager authenticationManager;
     private final UserDao userDao;
 
-    private Logger log = LoggerFactory.getLogger(AuthenticationController.class);
+    private Logger log = LoggerFactory.getLogger(ControllerAuthentication.class);
     private final JwtUtils jwtUtils;
     @PostMapping("/authenticate")
     public ResponseEntity<String> authenticate(
