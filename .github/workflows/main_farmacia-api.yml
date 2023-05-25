@@ -52,5 +52,4 @@ jobs:
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AFA760D34A454F8D8F07A6BF0307B227 }}
           package: '*.jar'
           env: SPRING_PROFILES_ACTIVE=prod
-          path: '${{github.workspace }}/src/main/resources/application-prod.yml'
-          
+          path: '${{github.workspace }}/src/main/resources/application-prod.yml'          
