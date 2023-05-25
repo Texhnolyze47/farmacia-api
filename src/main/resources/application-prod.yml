@@ -1,3 +1,4 @@
+
 spring:
   datasource:
     url: jdbc:postgresql://${PROD_DB_HOST}:${PROD_DB_PORT}/${PROD_DB_NAME}
@@ -10,4 +11,6 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  profiles:
+    active: dev
 
