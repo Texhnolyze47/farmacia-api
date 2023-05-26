@@ -1,9 +1,9 @@
 
 spring:
   datasource:
-    url: jdbc:postgresql://${PROD_DB_HOST}:${PROD_DB_PORT}/${PROD_DB_NAME}
-    username: ${PROD_DB_USERNAME}
-    password: ${PROD_DB_PASSWORD}
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   jpa:
     properties:
       hibernate:
@@ -11,6 +11,5 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-  profiles:
-    active: prod
+
 
