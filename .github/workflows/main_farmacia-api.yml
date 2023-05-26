@@ -58,5 +58,5 @@ jobs:
           app-name: 'farmacia-api'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AFA760D34A454F8D8F07A6BF0307B227 }}
-          package: '${{github.workspace}}/target/*.jar'
+          package: '${{github.workspace}}/*.jar'
 
