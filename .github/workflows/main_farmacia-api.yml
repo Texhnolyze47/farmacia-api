@@ -49,8 +49,6 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: java-app
-      - name: List files in target directory
-        run: ls -R ${{github.workspace}}
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
