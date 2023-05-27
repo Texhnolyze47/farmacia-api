@@ -1,7 +1,6 @@
 package com.texhnolyze.farmacia.controllers;
 
 import com.texhnolyze.farmacia.entities.Employee;
-import com.texhnolyze.farmacia.entities.Sale;
 import com.texhnolyze.farmacia.service.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/employees")
