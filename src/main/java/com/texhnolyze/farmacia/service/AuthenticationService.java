@@ -2,6 +2,7 @@ package com.texhnolyze.farmacia.service;
 
 import com.texhnolyze.farmacia.entities.Role;
 import com.texhnolyze.farmacia.entities.User;
+import com.texhnolyze.farmacia.exceptions.UsernameAlreadyTakenException;
 import com.texhnolyze.farmacia.repository.RoleRepository;
 import com.texhnolyze.farmacia.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -29,6 +30,9 @@ public class AuthenticationService {
 
     public User registerUser(String username,String password) {
         logger.info("in Authentication Service - register");
+        if (isUsersExists(username)) {
+            throw new UsernameAlreadyTakenException("Username already taken");
+        }
         String encodedPassword = passwordEncoder.encode(password);
         Role userRole = roleRepository.findByAuthority("USER").orElseThrow(() -> new RuntimeException("USER role not found"));
         logger.info("role - user: {} ", userRole);
@@ -36,6 +40,10 @@ public class AuthenticationService {
         Set<Role> authorities = new HashSet<>();
         authorities.add(userRole);
         return userRepository.save(new User(0,username,encodedPassword,authorities));
+    }
+
+    private boolean isUsersExists(String username) {
+        return userRepository.findByUsername(username).isPresent();
     }
 
 }
