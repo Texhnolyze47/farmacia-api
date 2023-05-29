@@ -1,6 +1,6 @@
 package com.texhnolyze.farmacia.controller;
 
-import com.texhnolyze.farmacia.dto.RegistrationDTO;
+import com.texhnolyze.farmacia.dto.RegistrationRequestDTO;
 import com.texhnolyze.farmacia.service.AuthenticationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ class AuthenticationControllerTest {
 
     @Test
     void testRegisterUser() {
-        RegistrationDTO registrationDTO = new RegistrationDTO("username", "password");
+        RegistrationRequestDTO registrationDTO = new RegistrationRequestDTO("username", "password");
         ResponseEntity<String> responseEntity = authenticationController.registerUser(registrationDTO);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals("User registered successfully", responseEntity.getBody());
