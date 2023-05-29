@@ -41,7 +41,7 @@ public class AuthenticationService {
     public User registerUser(String username,String password) {
         logger.info("in Authentication Service - register");
         if (isUsersExists(username)) {
-            throw new UsernameAlreadyTakenException("Username already taken", HttpStatus.CONFLICT);
+            throw new UsernameAlreadyTakenException("Username already taken");
         }
         String encodedPassword = passwordEncoder.encode(password);
         Role userRole = roleRepository.findByAuthority("USER").orElseThrow(() -> new RuntimeException("USER role not found"));
