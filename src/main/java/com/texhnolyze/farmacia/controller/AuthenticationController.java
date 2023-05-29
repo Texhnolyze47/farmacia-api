@@ -1,7 +1,10 @@
 package com.texhnolyze.farmacia.controller;
 
-import com.texhnolyze.farmacia.dto.RegistrationDTO;
+import com.texhnolyze.farmacia.dto.LoginRequestDTO;
+import com.texhnolyze.farmacia.dto.LoginResponseDTO;
+import com.texhnolyze.farmacia.dto.RegistrationRequestDTO;
 import com.texhnolyze.farmacia.exceptions.UsernameAlreadyTakenException;
+import com.texhnolyze.farmacia.exceptions.UsernameNotFoundException;
 import com.texhnolyze.farmacia.service.AuthenticationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 @CrossOrigin("*")
 public class AuthenticationController {
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
@@ -23,16 +26,26 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@Validated @RequestBody RegistrationDTO registrationDTO) {
+    public ResponseEntity<String> registerUser(@Validated @RequestBody RegistrationRequestDTO registrationDTO) {
         logger.info("AuthenticationController - registerUser");
         try {
             authenticationService.registerUser(registrationDTO.username(), registrationDTO.password());
             logger.trace("info: {}", registrationDTO);
             return ResponseEntity.ok("User registered successfully");
         }catch (UsernameAlreadyTakenException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            throw new UsernameAlreadyTakenException(e.getMessage(), HttpStatus.CONFLICT);
         }
+    }
 
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseDTO> loginUser (@Validated @RequestBody LoginRequestDTO login) {
+        try {
+            LoginResponseDTO user = authenticationService.loginUser(login.username(), login.password());
+            logger.trace("user info: {}", user);
+            return ResponseEntity.ok(user);
+        } catch (UsernameNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 
 }
