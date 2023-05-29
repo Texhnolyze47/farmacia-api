@@ -1,5 +1,6 @@
 package com.texhnolyze.farmacia.dto;
 
-import java.util.List;
+import lombok.Builder;
 
-public record ErrorDTO(String code, List<String> message) {}
+@Builder
+public record ErrorDTO(String message) {}
