@@ -33,7 +33,7 @@ public class AuthenticationController {
             logger.trace("info: {}", registrationDTO);
             return ResponseEntity.ok("User registered successfully");
         }catch (UsernameAlreadyTakenException e) {
-            throw new UsernameAlreadyTakenException(e.getMessage(), HttpStatus.CONFLICT);
+            throw new UsernameAlreadyTakenException(e.getMessage());
         }
     }
 
