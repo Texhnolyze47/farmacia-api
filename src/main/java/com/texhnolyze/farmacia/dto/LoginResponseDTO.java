@@ -1,5 +1,6 @@
 package com.texhnolyze.farmacia.dto;
 
+import com.texhnolyze.farmacia.entities.Role;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -9,5 +10,7 @@ public record LoginResponseDTO(
         String username,
         @NotNull(message = "jwt cannot be null")
         @NotBlank(message = "jwt cannot be blank")
-        String token) {
+        String token,
+        Role role
+) {
 }
