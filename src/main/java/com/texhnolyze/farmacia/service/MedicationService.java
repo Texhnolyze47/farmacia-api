@@ -38,7 +38,7 @@ public class MedicationService {
 
     public Medication updateMedication(Integer idMedication, Medication medication) {
         Optional<Medication> notFoundMedication = medicationRepository.findById(idMedication);
-        
+
         Medication existMedication = notFoundMedication.get();
         existMedication.setName(medication.getName());
         existMedication.setDescription(medication.getDescription());
