@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "medication")
 @Data
@@ -14,12 +17,14 @@ public class Medication {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
     private String name;
     private String description;
     private Double price;
     private int quantity;
     @ManyToOne
     private Manufacturer manufacturer;
+    @OneToMany(mappedBy = "medication")
+    private List<MedicineImage> images = new ArrayList<>();
 
 }

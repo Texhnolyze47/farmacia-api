@@ -12,14 +12,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ImageData {
+public class MedicineImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String type;
-    @Lob
-    @Column(name = "image_data", length = 1000)
-    private byte[] imageBytes;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "medicine_id")
+    private Medication medication;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "file_data_id")
+    private FileData fileData;
 }
