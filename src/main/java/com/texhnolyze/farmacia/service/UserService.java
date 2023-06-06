@@ -38,7 +38,7 @@ public class UserService implements UserDetailsService {
         Set<Role> roles = new HashSet<>();
         roles.add(role);
         logger.info(String.format("Saving user with username %s and de role %s", user.getUsername(), role.getAuthority()));
-        userRepository.save(new User(user.getUserId(), user.getUsername(), user.getPassword(), roles));
+        userRepository.save(new User(user.getUserId(),user.getName(), user.getUsername(), user.getPassword(), roles));
         logger.info("User with username {} saved successfully", user.getUsername());
     }
 }
