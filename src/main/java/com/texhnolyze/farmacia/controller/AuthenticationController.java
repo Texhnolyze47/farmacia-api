@@ -14,7 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("api/auth")
 @CrossOrigin("*")
 public class AuthenticationController {
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
@@ -29,7 +29,7 @@ public class AuthenticationController {
     public ResponseEntity<String> registerUser(@Validated @RequestBody RegistrationRequestDTO registrationDTO) {
         logger.info("AuthenticationController - registerUser");
         try {
-            authenticationService.registerUser(registrationDTO.username(), registrationDTO.password());
+            authenticationService.registerUser(registrationDTO.name(), registrationDTO.username(), registrationDTO.password());
             logger.trace("info: {}", registrationDTO);
             return ResponseEntity.ok("User registered successfully");
         }catch (UsernameAlreadyTakenException e) {

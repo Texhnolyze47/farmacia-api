@@ -29,7 +29,7 @@ public class FarmaciaApplication {
 			Set<Role> roles = new HashSet<>();
 			roles.add(adminRole);
 
-			User admin = new User(1,"admin",passwordEncoder.encode("password"), roles);
+			User admin = new User(1,"ivan","admin@mail.com",passwordEncoder.encode("password"), roles);
 
 			userRepository.save(admin);
 		};

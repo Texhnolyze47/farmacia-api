@@ -37,7 +37,7 @@ public class AuthenticationService {
         this.tokenService = tokenService;
     }
 
-    public User registerUser(String username,String password) {
+    public User registerUser(String name,String username,String password) {
         logger.info("in Authentication Service - register");
         if (isUsersExists(username)) {
             throw new UsernameAlreadyTakenException("Username already taken");
@@ -48,7 +48,7 @@ public class AuthenticationService {
 
         Set<Role> authorities = new HashSet<>();
         authorities.add(userRole);
-        return userRepository.save(new User(0,username,encodedPassword,authorities));
+        return userRepository.save(new User(0,name,username,encodedPassword,authorities));
 
     }
 
