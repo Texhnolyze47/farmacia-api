@@ -56,9 +56,15 @@ public class SecurityConfig {
         http
                 .csrf(crsf -> crsf.disable())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/api/auth/**").permitAll();
-                    auth.requestMatchers("/api/admin/**").hasRole("ADMIN");
-                    auth.requestMatchers("/api/user/**").hasAnyRole("USER","ADMIN");
+                    auth.requestMatchers("/auth/**").permitAll();
+                    auth.requestMatchers("/admin/**").hasRole("ADMIN");
+                    auth.requestMatchers("/medications/**").hasRole("ADMIN");
+                    auth.requestMatchers("/manufacturer/**").hasRole("ADMIN");
+                    auth.requestMatchers("/prescription/**").hasRole("ADMIN");
+                    auth.requestMatchers("/client/**").hasRole("ADMIN");
+                    auth.requestMatchers("/order/**").permitAll();
+                    auth.requestMatchers("/user/**").hasAnyRole("USER","ADMIN");
+                    auth.requestMatchers("/image").permitAll();
                     auth.anyRequest().authenticated();
                 });
 
