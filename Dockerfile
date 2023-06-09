@@ -3,9 +3,10 @@ FROM gradle:7.2.0-jdk17 AS build
 WORKDIR /app
 COPY build.gradle.kts settings.gradle.kts gradlew ./
 COPY gradle ./gradle
+RUN chmod +x ./gradlew
+
 RUN ./gradlew --no-daemon dependencies
 
-RUN chmod +x ./gradlew
 
 COPY src ./src
 RUN ./gradlew --no-daemon bootJar
