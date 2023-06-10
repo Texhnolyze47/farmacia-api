@@ -1,22 +1,11 @@
-FROM gradle:7.2.0-jdk17 AS build
-
-WORKDIR /app
-COPY build.gradle.kts settings.gradle.kts gradlew ./
-COPY gradle ./gradle
-RUN chmod +x ./gradlew
-
-RUN ./gradlew --no-daemon dependencies
-
-
-COPY src ./src
-RUN ./gradlew --no-daemon bootJar
-
+# Use an official OpenJDK runtime as a parent image
 FROM openjdk:17-alpine
 
-
+# Set the working directory to /app
 WORKDIR /app
 
-COPY --from=build /app/build/libs/*.jar app.jar
+# Copy the build output from the Gradle build context to the container's working directory
+COPY build/libs/*.jar app.jar
 
 # Expose port 8080 for the container
 EXPOSE 8080
