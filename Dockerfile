@@ -3,8 +3,8 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 
-COPY gradle/wrapper/gradle-wrapper.jar ./gradle/wrapper/
-COPY gradle/wrapper/gradle-wrapper.properties ./gradle/wrapper/
+COPY gradle/wrapper/gradle-wrapper.jar /kaniko/buildcontext/gradle/wrapper/
+COPY gradle/wrapper/gradle-wrapper.properties /kaniko/buildcontext/gradle/wrapper/
 
 COPY build.gradle.kts .
 COPY settings.gradle.kts .
