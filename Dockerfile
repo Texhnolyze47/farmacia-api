@@ -1,19 +1,5 @@
 FROM openjdk:17-jdk-slim
-
-WORKDIR /app
-
-
-COPY gradle/wrapper/gradle-wrapper.jar /kaniko/buildcontext/gradle/wrapper/
-COPY gradle/wrapper/gradle-wrapper.properties /kaniko/buildcontext/gradle/wrapper/
-
-COPY build.gradle.kts .
-COPY settings.gradle.kts .
-COPY gradlew .
-
-COPY src ./src
-
-RUN ./gradlew build --no-daemon
-
+ARG JAR_FILE
+COPY ${JAR_FILE} app.jar
 EXPOSE 8080
-
-ENTRYPOINT ["java", "-jar", "build/libs/farmacia-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
