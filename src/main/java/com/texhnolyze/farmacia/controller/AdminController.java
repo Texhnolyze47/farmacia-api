@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/admin")
+@CrossOrigin("*")
 public class AdminController {
 
     private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
