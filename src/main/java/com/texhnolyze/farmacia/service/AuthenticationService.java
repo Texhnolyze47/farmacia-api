@@ -36,7 +36,7 @@ public class AuthenticationService {
     }
     public void registerUser(String name,String username,String password) {
         logger.info("in Authentication Service - register");
-        if (!isUsersExists(username)) {
+        if (isUsersExists(username)) {
             throw new UsernameAlreadyTakenException("Username already taken");
         }
         String encodedPassword = passwordEncoder.encode(password);
