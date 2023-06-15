@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Component
 public class RoleLoader implements CommandLineRunner {
@@ -17,11 +18,19 @@ public class RoleLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Role adminRole = new Role("ADMIN");
-        Role userRole = new Role("USER");
-        Role doctorRole = new Role("DOCTOR");
-        Role supportRole = new Role("SUPPORT");
-        Role sellerRole = new Role("SELLER");
-        repository.saveAll(Arrays.asList(adminRole, userRole,doctorRole,supportRole,sellerRole));
+        List<Role> roles = Arrays.asList(
+                new Role("ADMIN"),
+                new Role("USER"),
+                new Role("DOCTOR"),
+                new Role("SUPPORT"),
+                new Role("SELLER")
+        );
+
+        for (Role role : roles) {
+            if (!repository.existsByAuthority(role.getAuthority())) {
+                repository.save(role);
+            }
+        }
     }
+
 }
