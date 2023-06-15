@@ -6,7 +6,6 @@ import com.texhnolyze.farmacia.entities.User;
 import com.texhnolyze.farmacia.exceptions.UsernameAlreadyTakenException;
 import com.texhnolyze.farmacia.repository.RoleRepository;
 import com.texhnolyze.farmacia.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,7 +19,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-@Transactional
 public class AuthenticationService {
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
     private final UserRepository userRepository;
@@ -36,10 +34,9 @@ public class AuthenticationService {
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
     }
-
-    public User registerUser(String name,String username,String password) {
+    public void registerUser(String name,String username,String password) {
         logger.info("in Authentication Service - register");
-        if (isUsersExists(username)) {
+        if (!isUsersExists(username)) {
             throw new UsernameAlreadyTakenException("Username already taken");
         }
         String encodedPassword = passwordEncoder.encode(password);
@@ -48,8 +45,8 @@ public class AuthenticationService {
 
         Set<Role> authorities = new HashSet<>();
         authorities.add(userRole);
-        return userRepository.save(new User(0,name,username,encodedPassword,authorities));
 
+        userRepository.save(new User(0L,name,username,encodedPassword,authorities));
     }
 
     public LoginResponseDTO loginUser(String username, String password) {

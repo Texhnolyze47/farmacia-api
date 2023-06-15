@@ -20,20 +20,19 @@ public class AuthenticationController {
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
     private final AuthenticationService authenticationService;
 
-
     public AuthenticationController(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@Validated @RequestBody RegistrationRequestDTO registrationDTO) {
+    public ResponseEntity<String> registerUser(@RequestBody  RegistrationRequestDTO registrationDTO) {
         logger.info("AuthenticationController - registerUser");
         try {
             authenticationService.registerUser(registrationDTO.name(), registrationDTO.username(), registrationDTO.password());
             logger.trace("info: {}", registrationDTO);
             return ResponseEntity.ok("User registered successfully");
         }catch (UsernameAlreadyTakenException e) {
-            throw new UsernameAlreadyTakenException(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
