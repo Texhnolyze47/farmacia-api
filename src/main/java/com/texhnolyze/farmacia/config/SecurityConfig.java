@@ -35,6 +35,13 @@ public class SecurityConfig {
     private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
     private final RSAKeyProperties keys;
 
+    private static final String[] AUTH_WHITELIST = {
+            "/api-docs/**",
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+    };
+
+
     public SecurityConfig(RSAKeyProperties keys) {
         this.keys = keys;
     }
@@ -56,13 +63,14 @@ public class SecurityConfig {
         http
                 .csrf(crsf -> crsf.disable())
                 .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers(AUTH_WHITELIST).permitAll();
                     auth.requestMatchers("/api/auth/**").permitAll();
+                    auth.requestMatchers("/api/order/**").permitAll();
                     auth.requestMatchers("/api/admin/**").hasRole("ADMIN");
                     auth.requestMatchers("/api/medications/**").hasRole("ADMIN");
                     auth.requestMatchers("/api/manufacturer/**").hasRole("ADMIN");
                     auth.requestMatchers("/api/prescription/**").hasRole("ADMIN");
                     auth.requestMatchers("/api/client/**").hasRole("ADMIN");
-                    auth.requestMatchers("/api/order/**").permitAll();
                     auth.requestMatchers("/api/user/**").hasAnyRole("USER","ADMIN");
                     auth.requestMatchers("/image").permitAll();
                     auth.anyRequest().authenticated();
