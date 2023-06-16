@@ -36,11 +36,19 @@ public class SecurityConfig {
     private final RSAKeyProperties keys;
 
     private static final String[] AUTH_WHITELIST = {
-            "/api-docs/**",
+            "/v2/api-docs",
+            "/v3/api-docs",
             "/v3/api-docs/**",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
             "/swagger-ui/**",
+            "webjars/**",
+            "/swagger-ui.html"
     };
-
+    private static final String ADMIN_ROLE = "ADMIN";
+    private static final String USER_ROLE = "USER";
 
     public SecurityConfig(RSAKeyProperties keys) {
         this.keys = keys;
@@ -64,14 +72,12 @@ public class SecurityConfig {
                 .csrf(crsf -> crsf.disable())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(AUTH_WHITELIST).permitAll();
-                    auth.requestMatchers("/api/auth/**").permitAll();
-                    auth.requestMatchers("/api/order/**").permitAll();
-                    auth.requestMatchers("/api/admin/**").hasRole("ADMIN");
-                    auth.requestMatchers("/api/medications/**").hasRole("ADMIN");
-                    auth.requestMatchers("/api/manufacturer/**").hasRole("ADMIN");
-                    auth.requestMatchers("/api/prescription/**").hasRole("ADMIN");
-                    auth.requestMatchers("/api/client/**").hasRole("ADMIN");
-                    auth.requestMatchers("/api/user/**").hasAnyRole("USER","ADMIN");
+                    auth.requestMatchers("/api/admin/**").hasRole(ADMIN_ROLE);
+                    auth.requestMatchers("/api/medications/**").hasRole(ADMIN_ROLE);
+                    auth.requestMatchers("/api/manufacturer/**").hasRole(ADMIN_ROLE);
+                    auth.requestMatchers("/api/prescription/**").hasRole(ADMIN_ROLE);
+                    auth.requestMatchers("/api/client/**").hasRole(ADMIN_ROLE);
+                    auth.requestMatchers("/api/user/**").hasAnyRole(USER_ROLE,ADMIN_ROLE);
                     auth.requestMatchers("/image").permitAll();
                     auth.anyRequest().authenticated();
                 });
