@@ -18,6 +18,4 @@ springdoc:
     enabled: true
   swagger-ui:
     enabled: true
-    path: /api-docs
-  paths-to-match: /api/clients/**
 
