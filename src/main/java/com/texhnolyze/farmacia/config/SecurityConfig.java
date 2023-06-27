@@ -73,6 +73,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(AUTH_WHITELIST).permitAll();
                     auth.requestMatchers("/api/admin/**").hasRole(ADMIN_ROLE);
+                    auth.requestMatchers("/api/product/**").permitAll();
                     auth.requestMatchers("/api/medications/**").hasRole(ADMIN_ROLE);
                     auth.requestMatchers("/api/manufacturer/**").hasRole(ADMIN_ROLE);
                     auth.requestMatchers("/api/prescription/**").hasRole(ADMIN_ROLE);

@@ -19,3 +19,8 @@ springdoc:
   swagger-ui:
     enabled: true
 
+aws:
+  region: us-east-2
+  s3:
+    buckets:
+      customer: farmacia-api-img

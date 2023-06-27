@@ -23,6 +23,5 @@ public class Product {
 
     private Integer quantity;
 
-    @OneToOne
-    private FileData image;
+    private String image;
 }
