@@ -10,9 +10,12 @@ public record RegistrationRequestDTO(
         @NotNull(message = "username cannot be null")
         @NotBlank(message = "username cannot be blank")
         String username,
+        @NotNull(message = "email cannot be null")
+        @NotBlank(message = "email cannot be blank")
+        String email,
         @NotNull(message = "Password cannot be null")
         @NotBlank(message = "Password cannot be blank")
-        @Size(min = 8, max = 20, message = "Password must be between {min} and {max} characters")
+        @Size(min = 2, max = 20, message = "Password must be between {min} and {max} characters")
         String password
 ) {
 }

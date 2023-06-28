@@ -28,7 +28,7 @@ public class AuthenticationController {
     public ResponseEntity<String> registerUser(@RequestBody  RegistrationRequestDTO registrationDTO) {
         logger.info("AuthenticationController - registerUser");
         try {
-            authenticationService.registerUser(registrationDTO.username(), registrationDTO.password());
+            authenticationService.registerUser(registrationDTO.username(), registrationDTO.email(), registrationDTO.password());
             logger.trace("info: {}", registrationDTO);
             return ResponseEntity.ok("User registered successfully");
         }catch (UsernameAlreadyTakenException e) {
