@@ -18,6 +18,9 @@ springdoc:
     enabled: true
   swagger-ui:
     enabled: true
-    path: /api-docs
-  paths-to-match: /api/clients/**
 
+aws:
+  region: us-east-2
+  s3:
+    buckets:
+      customer: farmacia-api-img
