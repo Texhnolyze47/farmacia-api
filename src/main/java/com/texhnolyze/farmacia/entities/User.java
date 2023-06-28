@@ -21,7 +21,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long userId;
-    @Column(unique = true, name = "correo")
+    @Column(unique = true)
     private String username;
     private String password;
     @ManyToMany(fetch = FetchType.LAZY)
