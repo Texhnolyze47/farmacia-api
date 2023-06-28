@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/employee")
+@CrossOrigin("*")
 public class EmployeeController {
 
     private final EmployeeService employeeService;
@@ -27,4 +28,23 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.allEmployee());
     }
 
+
+    @GetMapping("/{employeeId}")
+    public ResponseEntity<Employee> getEmployee(@PathVariable Long employeeId){
+        return ResponseEntity.ok(employeeService.getEmployee(employeeId));
+    }
+
+    @PutMapping("/{employeeId}")
+    public ResponseEntity<String> updateEmployee(@PathVariable Long employeeId, Employee employee){
+        employeeService.updateEmployee(employeeId,employee);
+        return ResponseEntity.ok("Employee update");
+    }
+
+    @DeleteMapping("/{employeeId}")
+    public ResponseEntity<String> deleteEmployee(@PathVariable Long employeeId){
+        employeeService.deleteEmployee(employeeId);
+        return ResponseEntity.ok("Employee delete");
+    }
 }
+
+
