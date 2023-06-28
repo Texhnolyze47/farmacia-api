@@ -27,11 +27,11 @@ class AuthenticationControllerTest {
 
     @Test
     void testRegisterUser() {
-        RegistrationRequestDTO registrationDTO = new RegistrationRequestDTO("username", "password");
+        RegistrationRequestDTO registrationDTO = new RegistrationRequestDTO("username","email", "password");
         ResponseEntity<String> responseEntity = authenticationController.registerUser(registrationDTO);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals("User registered successfully", responseEntity.getBody());
-        verify(authenticationService, times(1)).registerUser(registrationDTO.username(), registrationDTO.password());
+        verify(authenticationService, times(1)).registerUser(registrationDTO.username(), registrationDTO.email(), registrationDTO.password());
     }
 
 }
