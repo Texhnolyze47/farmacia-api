@@ -39,6 +39,15 @@ public class AuthenticationService {
         if (isUsersExists(username)) {
             throw new UsernameAlreadyTakenException("Username already taken");
         }
+        if (userRepository.count() == 0) {
+            Role adminRole = roleRepository.findByAuthority("ADMIN").orElseThrow(() -> new RuntimeException("ADMIN role not found"));
+            logger.info("role - admin: {} ", adminRole);
+            Set<Role> authorities = new HashSet<>();
+            authorities.add(adminRole);
+            String encodedPassword = passwordEncoder.encode(password);
+            userRepository.save(new User(0L,username, email,encodedPassword,authorities));
+            return;
+        }
         String encodedPassword = passwordEncoder.encode(password);
         Role userRole = roleRepository.findByAuthority("USER").orElseThrow(() -> new RuntimeException("USER role not found"));
         logger.info("role - user: {} ", userRole);
