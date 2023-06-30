@@ -24,7 +24,6 @@ public class Medication {
     private int quantity;
     @ManyToOne
     private Manufacturer manufacturer;
-    @OneToMany(mappedBy = "medication")
-    private List<MedicineImage> images = new ArrayList<>();
+
 
 }
