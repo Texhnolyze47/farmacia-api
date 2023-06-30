@@ -19,12 +19,8 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<String> addProduct(@RequestParam("image") MultipartFile image,
-                                             @RequestParam("name") String name,
-                                             @RequestParam("description") String description,
-                                             @RequestParam("price") Double price,
-                                             @RequestParam("quantity") Integer quantity) {
-        productService.saveProduct(image,name,description,price,quantity);
+    public ResponseEntity<String> addProduct(@RequestBody Product product) {
+        productService.saveProduct(product);
         return ResponseEntity.ok("Product added");
     }
 
@@ -46,13 +42,5 @@ public class ProductController {
         return ResponseEntity.ok("Delete client");
     }
 
-    @PostMapping("/{productId}/product-image")
-    public void uploadProductImage(@PathVariable Long productId, @RequestParam("file")MultipartFile file){
-        productService.uploadImageProduct(productId, file);
-    }
 
-    @GetMapping("/{productId}/product-image")
-    public byte[] getUploadProductImage(@PathVariable Long productId){
-        return productService.getImageProduct(productId);
-    }
 }

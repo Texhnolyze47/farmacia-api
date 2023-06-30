@@ -5,9 +5,7 @@ import com.texhnolyze.farmacia.entities.Product;
 import com.texhnolyze.farmacia.exceptions.ProductNotFoundException;
 import com.texhnolyze.farmacia.repository.ProductRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import software.amazon.awssdk.core.sync.RequestBody;
-import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -28,20 +26,10 @@ public class ProductService {
         this.s3Buckets = s3Buckets;
     }
 
-    public void saveProduct(MultipartFile image, String name, String description, Double price, Integer quantity) {
-        Product product = new Product();
-        product.setName(name);
-        product.setDescription(description);
-        product.setPrice(price);
-        product.setQuantity(quantity);
+    public void saveProduct(Product product) {
         productRepository.save(product);
 
 
-        String imagePath = uploadImageProduct(image);
-        product.setImage(imagePath);
-
-        // Actualizar el producto en la base de datos con la ruta de la imagen
-        productRepository.save(product);
     }
 
     public List<Product> getAllProducts() {
@@ -68,42 +56,5 @@ public class ProductService {
         productRepository.deleteById(clientId);
     }
 
-    public void uploadImageProduct(MultipartFile image) {
-        try {
-            String fileName = UUID.randomUUID().toString() + "-" + image.getOriginalFilename();
 
-            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                    .bucket(s3Buckets.getCustomer())
-                    .key(fileName)
-                    .build();
-
-            byte[] imageBytes = image.getBytes();
-            InputStream inputStream = new ByteArrayInputStream(imageBytes);
-
-            s3Service.putObject(putObjectRequest, RequestBody.fromInputStream(inputStream, imageBytes.length));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public byte[] getImageProduct(Long productId) {
-        Product product = productRepository.findById(productId)
-                .orElseThrow(()-> new ProductNotFoundException(
-                "product with id [%s] not found".formatted(productId)
-        ));
-
-        var productImageId = "TODO";
-
-        if (product.getImage().isBlank()) {
-            throw new ProductNotFoundException(
-                    "product with id [%s] image product not found".formatted(productId)
-            );
-        }
-
-        byte[] productImage = s3Service.getObject(
-                s3Buckets.getCustomer(),
-                "image-product/%s/%s".formatted(productId, productImageId)
-                );
-        return productImage;
-    }
 }
