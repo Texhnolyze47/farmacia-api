@@ -24,6 +24,5 @@ public class Medication {
     private int quantity;
     @ManyToOne
     private Manufacturer manufacturer;
-    private String image;
 
 }
