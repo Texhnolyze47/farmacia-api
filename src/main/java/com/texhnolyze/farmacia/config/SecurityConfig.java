@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -45,7 +46,8 @@ public class SecurityConfig {
             "/configuration/security",
             "/swagger-ui/**",
             "webjars/**",
-            "/swagger-ui.html"
+            "/swagger-ui.html",
+            "/api/auth/**",
     };
     private static final String ADMIN_ROLE = "ADMIN";
     private static final String USER_ROLE = "USER";
@@ -83,11 +85,8 @@ public class SecurityConfig {
                     auth.anyRequest().authenticated();
                 });
 
-                // TODO: Stop using jwt(), since it is deprecated.
         http
-                .oauth2ResourceServer()
-                .jwt()
-                .jwtAuthenticationConverter(jwtAuthenticationConverter());
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
         http
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
