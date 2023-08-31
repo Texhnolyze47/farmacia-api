@@ -7,13 +7,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.time.Instant;
+
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(value = UsernameAlreadyTakenException.class)
-    public ResponseEntity<ErrorDTO> requestExceptionHandler(UsernameAlreadyTakenException ex) {
-        ErrorDTO errorDTO = ErrorDTO.builder().message(ex.getMessage()).build();
+    @ExceptionHandler( value = UsernameAlreadyTakenException.class)
+    public ResponseEntity<ErrorDTO> handleUsernameAlreadyTakenException(UsernameAlreadyTakenException ex) {
+        ErrorDTO errorDTO = new ErrorDTO(HttpStatus.CONFLICT.value(), ex.getMessage(), Instant.now());
         return new ResponseEntity<>(errorDTO,HttpStatus.CONFLICT);
     }
 

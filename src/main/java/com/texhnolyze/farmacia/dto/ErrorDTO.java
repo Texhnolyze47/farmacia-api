@@ -1,6 +1,7 @@
 package com.texhnolyze.farmacia.dto;
 
 import lombok.Builder;
+import java.time.Instant;
 
-@Builder
-public record ErrorDTO(String message) {}
+
+public record ErrorDTO(Integer statusCode, String message, Instant timestamp) {}
